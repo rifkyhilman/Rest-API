@@ -62,9 +62,6 @@ const getById = (req,res) => {
 
 const getByCategoryId = (req,res) => {
     model.Blog.findAll({
-        include: [{
-            model: model.category
-        }],
         where: {
             category_id: req.params.id_category
         }
