@@ -1,23 +1,10 @@
 const model = require('../models')
 
+const addCategory = (req,res) => {
+    const name = req.body.name
 
-const home = (req,res) => {
-    res.send('hello world')
-}
-
-const about = (req,res) => {
-    res.send('ini Aboute')
-}
-
-const addBlog = (req,res) => {
-    const title = req.body.title
-    const body = req.body.body
-    const category_id = req.body.category_id
-
-    model.Blog.create({
-        title,
-        body,
-        category_id
+    model.category.create({
+        name,
     })
     .then( (berhasil) => {
         res.status(201).json({
@@ -29,8 +16,8 @@ const addBlog = (req,res) => {
     })
 }
 
-const getAllblogs = (req,res) => {
-    model.Blog.findAll()
+const getAllCategory = (req,res) => {
+    model.category.findAll()
     .then( (berhasil) => {
         res.status(200).json({
             pesan: 'success',
@@ -42,8 +29,8 @@ const getAllblogs = (req,res) => {
     })
 }
 
-const getById = (req,res) => {
-    model.Blog.findAll({
+const getByIdCategory = (req,res) => {
+    model.category.findAll({
         where: {
             id: req.params.id
         }
@@ -59,29 +46,8 @@ const getById = (req,res) => {
     })
 }
 
-
-const getByCategoryId = (req,res) => {
-    model.Blog.findAll({
-        include: [{
-            model: model.category
-        }],
-        where: {
-            category_id: req.params.id_category
-        }
-    })
-    .then( (berhasil) => {
-        res.status(200).json({
-            pesan: 'success',
-            data: berhasil
-        })
-    })
-    .catch( (error) => {
-        res.send(error)
-    })
-}
-
-const deletById = (req,res) => {
-    model.Blog.destroy({
+const deletByIdCategory = (req,res) => {
+    model.category.destroy({
         where: {
             id: req.params.id
         }
@@ -97,11 +63,11 @@ const deletById = (req,res) => {
     })
 }
 
-const updateById = (req,res) => {
-    model.Blog.update({
-            title: req.body.title,
-            body: req.body.body,
-            category_id: req.body.category_id
+const updateByIdCategory = (req,res) => {
+    model.category.update({
+            name: req.body.name,
+            email: req.body.email,
+            password: req.body.password
         },{
         where: {
             id: req.params.id
@@ -120,12 +86,9 @@ const updateById = (req,res) => {
 
 
 module.exports = {
-    home,
-    about,
-    addBlog,
-    getAllblogs,
-    getById,
-    deletById,
-    updateById,
-    getByCategoryId
+    addCategory,
+    getAllCategory,
+    getByIdCategory,
+    deletByIdCategory,
+    updateByIdCategory
 }
